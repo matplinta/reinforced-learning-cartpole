@@ -4,11 +4,8 @@ import gym
 import random
 import sys
 import os
-from bisect import bisect_left, bisect_right
 
 class QLearner:
-    filename = sys.argv[1]
-    
     def __init__(self, buckets=6, alpha=0.01, gamma=0.01, exploration_rate = 0.1 ,exploration_min = 0.0, exploration_decay = 0.6, exploration_degrade = True, sarsa = True):
         self.rewards_all = []
         self.knowledge = dict()
@@ -101,7 +98,7 @@ class QLearner:
             
 def main():
     try:
-        learner = QLearner()
+        learner = QLearner(buckets=7)
         learner.learn(10000)  
         learner.save(QLearner.filename)
         # print(learner.knowledge)
@@ -109,7 +106,7 @@ def main():
         print('Interrupted')
         try:
             learner.save(QLearner.filename)
-            # print(learner.knowledge)
+            # print(learner.buckets)
             sys.exit(0)
         except SystemExit:
             os._exit(0)
